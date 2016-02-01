@@ -43,7 +43,7 @@ function linux_install_makemkv {
     echo '** Installing MAKEMKV **'
     echo ''
 
-    VER="$1"
+    VER="$MAKEMKV_VERSION"
     TMPDIR=`mktemp -d`
 
     # Install prerequisites
@@ -94,9 +94,15 @@ function mac_install_makemkv {
     TMPDIR=`mktemp -d`
 
     # Install this version of MakeMKV
-    pushd $TMPDIR
+     pushd $TMPDIR
 
-    curl -o makemkv.dmg http://www.makemkv.com/download/makemkv_v1.9.0_osx.dmg
+    echo http://www.makemkv.com/download/makemkv_v"$MAKEMKV_VERSION"_osx.dmg
+    curl -o makemkv.dmg http://www.makemkv.com/download/makemkv_v"$MAKEMKV_VERSION"_osx.dmg
+    
+    if [ $? -ne 0 ]; then
+        echo 'Failed to download makemkv'
+        exit 1
+    fi
     
     hdiutil mount makemkv.dmg
     
@@ -236,17 +242,19 @@ elif [[ $os_name == 'Darwin' ]]; then
 fi
 
 
+MAKEMKV_VERSION="1.9.9"
+
 #Install MakeMKV
 if [[ $os_name == 'Linux' ]]; then
     which makemkvcon > /dev/null
 
     if [ $? -ne 0 ]; then
-        linux_install_makemkv 1.9.0
+        linux_install_makemkv
     fi
 
 elif [[ $os_name == 'Darwin' ]]; then
     if [[ ! -f /Applications/MakeMKV.app/Contents/MacOS/makemkvcon ]]; then
-        mac_install_makemkv 1.9.0
+        mac_install_makemkv
     fi
 
 fi
