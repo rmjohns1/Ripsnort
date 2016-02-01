@@ -267,7 +267,7 @@ if [ $? -ne 0 ]; then
     if [[ $os_name == 'Linux' ]]; then
         linux_install_vobsub2srt
     elif [[ $os_name == 'Darwin' ]]; then
-        mac_install_makemkv
+        mac_install_vobsub2srt
     fi
 fi
 
