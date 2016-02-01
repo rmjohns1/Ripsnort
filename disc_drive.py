@@ -83,9 +83,9 @@ class DiscDrive:
 
         elif self.osType == OS_LINUX:
             try:
-                subprocess.check_output(['eject','-T',self.deviceID])
+                subprocess.check_output(['eject','-t',self.deviceID])
             except subprocess.CalledProcessError as e:
-                logging.error( 'Failed to eject disc ' + self.deviceID + ', reason: **' + str(e.output) + '**' )
+                logging.error( 'Failed to eject disc ' + self.deviceID + ', reason: **' + str(e.output) + '**, ' + str(e) )
                 sys.exit(1)
 
         else:
